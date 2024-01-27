@@ -1,9 +1,6 @@
 package main
 
 import (
-	"os"
-	"os/signal"
-	"syscall"
 	"time"
 
 	"github.com/gordonklaus/portaudio"
@@ -15,15 +12,7 @@ func main() {
 	e := newEcho(time.Second / 3)
 	defer e.Close()
 	chk(e.Start())
-
-	// Create a channel to receive OS signals
-	sigs := make(chan os.Signal, 1)
-	// Register the channel to receive interrupt signals
-	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
-
-	// Wait for a signal
-	<-sigs
-
+	time.Sleep(4 * time.Second)
 	chk(e.Stop())
 }
 
